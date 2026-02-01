@@ -1,11 +1,17 @@
 import DefaultTheme from 'vitepress/theme'
-import type { Theme } from 'vitepress'
+import HomePage from './components/HomePage.vue'
 import './style.css'
 
-const theme: Theme = {
-  extends: DefaultTheme,
-  enhanceApp({ app, router, siteData }) {
+// 导入IconPark图标
+import { install } from '@icon-park/vue-next/es/all'
+
+export default {
+  ...DefaultTheme,
+  enhanceApp({ app }) {
+    // 注册HomePage组件
+    app.component('HomePage', HomePage)
+
+    // 全局注册IconPark图标
+    install(app)
   }
 }
-
-export default theme
