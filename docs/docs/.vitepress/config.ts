@@ -4,11 +4,31 @@ export default defineConfig({
   title: '连点点',
   description: '高效便捷的连点器工具',
   lang: 'zh-CN',
+
+  // 子路径部署配置
+  base: '/ccclicker/',
+
+  // SEO 优化配置
   head: [
-    ['link', { rel: 'icon', href: '/logo.png' }]
+    ['link', { rel: 'icon', href: '/ccclicker/logo.png' }],
+    ['meta', { name: 'keywords', content: '连点器,自动点击,鼠标连点,游戏辅助,办公效率' }],
+    ['meta', { name: 'author', content: '连点点团队' }],
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:title', content: '连点点 - 高效便捷的连点器工具' }],
+    ['meta', { property: 'og:description', content: '专业的鼠标连点器工具，支持自定义点击频率、热键控制，提升游戏和办公效率' }],
+    ['meta', { property: 'og:image', content: '/ccclicker/logo.png' }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:title', content: '连点点 - 高效便捷的连点器工具' }],
+    ['meta', { name: 'twitter:description', content: '专业的鼠标连点器工具，支持自定义点击频率、热键控制，提升游戏和办公效率' }],
+    ['meta', { name: 'twitter:image', content: '/ccclicker/logo.png' }]
   ],
+
+  // 站点地图和搜索引擎优化
+  sitemap: {
+    hostname: 'https://your-domain.com/ccclicker' // 替换为你的实际域名
+  },
   themeConfig: {
-    logo: '/logo.png',
+    logo: '/ccclicker/logo.png',
     nav: [
       { text: '首页', link: '/' },
       { text: '功能特性', link: '/features' },
