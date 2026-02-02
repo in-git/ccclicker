@@ -1,6 +1,12 @@
+import UnoCSS from 'unocss/vite'
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
+  vite: {
+    plugins: [
+      UnoCSS()
+    ]
+  },
   title: '连点点',
   description: '高效便捷的连点器工具',
   lang: 'zh-CN',

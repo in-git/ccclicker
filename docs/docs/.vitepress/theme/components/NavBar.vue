@@ -1,11 +1,11 @@
 <template>
-  <nav class="navbar">
-    <div class="nav-container">
-      <div class="nav-logo">
+  <nav class="fixed top-0 left-0 right-0 z-1000 navbar">
+    <div class="max-w-6xl mx-auto px-6 flex justify-between items-center nav-container">
+      <div class="flex gap-1.5 items-center nav-logo">
         <img src="/logo.png" width="42" alt="">
-        <span>连点点</span>
+        <span class="text-2xl font-bold">连点点</span>
       </div>
-      <div class="nav-links">
+      <div class="flex gap-8 md:hidden nav-links">
         <a href="#" class="nav-link">产品介绍</a>
         <a href="#" class="nav-link">使用指南</a>
         <a href="#" class="nav-link">技术支持</a>
@@ -14,44 +14,19 @@
   </nav>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .nav-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   height: 60px;
 }
 
-.nav-logo {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-
-  span {
-    font-size: 24px;
-    font-weight: bold;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  }
-}
-
-
-.nav-links {
-  display: flex;
-  gap: 32px;
+.nav-logo span {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .nav-link {
@@ -76,12 +51,5 @@
 
 .nav-link:hover::after {
   width: 100%;
-}
-
-/* 响应式设计 */
-@media (max-width: 768px) {
-  .nav-links {
-    display: none;
-  }
 }
 </style>

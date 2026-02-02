@@ -1,3 +1,4 @@
+import 'uno.css'
 import DefaultTheme from 'vitepress/theme'
 import HomePage from './components/HomePage.vue'
 import './style.css'

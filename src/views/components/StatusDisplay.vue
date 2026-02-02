@@ -65,8 +65,7 @@ const modeText = computed(() => {
   border-radius: 10px;
   position: relative;
   .slogan{
-    padding: 10px;
-    @apply absolute bottom-4;
+    @apply absolute bottom-8 pl-8;
   }
 }
 </style>

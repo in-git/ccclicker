@@ -17,15 +17,11 @@ import HeroSection from './HeroSection.vue';
 import NavBar from './NavBar.vue';
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .homepage {
-  min-height: 100vh;
+  @apply min-h-screen bg-cover bg-center relative overflow-auto;
   background-image: url('../assets/background.webp');
-  background-size: cover;
   background-position: center;
-  position: relative;
-  overflow: auto;
+  background-size: cover;
 }
-
-
 </style>

@@ -7,7 +7,7 @@
 - **Tauri**: 跨平台桌面应用框架
 - **Vue3**: 渐进式 JavaScript 框架
 - **TypeScript**: JavaScript 的超集，提供类型安全
-- **UnoCSS**: 即时原子化 CSS 引擎
+- **UnoCSS**: 即时原子原子化 CSS 引擎
 - **SCSS**: CSS 预处理器
 - **Vite**: 下一代前端构建工具
 
@@ -23,7 +23,10 @@ autoClicker/
 │   ├── src/
 │   │   ├── lib.rs         # Rust 命令定义
 │   │   └── main.rs        # Rust 入口
-│   └── tauri.conf.json    # Tauri 配置
+│   └── tauri.conf    # Tauri 配置
+├── scripts/                # 工具脚本
+│   └── generate-icons.ps1  # 图标生成脚本
+├── docs/                   # 官网文档
 ├── uno.config.ts          # UnoCSS 配置
 ├── vite.config.ts         # Vite 配置
 └── package.json           # 项目依赖
@@ -83,6 +86,77 @@ npm run tauri build
 ```
 
 构建后的应用位于 `src-tauri/target/release/bundle/` 目录。
+
+## 图标生成
+
+### 快速开始
+
+1. 将你的原始 logo 文件重命名为 `icon.png`
+2. 将 `icon.png` 放到 `src-tauri/icons`` 目录下
+3. 在项目根目录运行：
+
+```bash
+npm run generate-icons
+```
+
+### 生成 icon.ico 和 icon.icns
+
+脚本会生成所有 PNG 格式的图标，但 `icon.ico` 和 `icon.icns` 需要使用专门的工具生成：
+
+#### 生成 icon.ico（Windows）
+
+**在线工具（推荐）：**
+1. 访问 https://convertico.com/
+2. 上传 `icon.png`
+3. 下载生成的 `.ico` 文件
+4. 重命名为 `icon.ico`
+5. 放到 `src-tauri/icons` 目录下
+
+#### 生成 icon.icns（macOS）
+
+**在线工具：**
+1. 访问 https://cloudconvert.com/png-to-icns
+2. 上传 `icon.png`
+3. 下载生成的 `.icns` 文件
+4. 放到 `src-tauri/icons` 目录下
+
+### 生成的图标列表
+
+#### 核心应用图标
+- `32x32.png` - Windows 任务栏、系统托盘
+- `128x128.png` - 应用窗口、文件管理器
+- `128x128@2x.png` - 高分辨率屏幕
+- `icon.ico` - Windows 可执行文件
+- `icon.icns` - macOS 应用图标
+
+#### Windows Store 应用图标
+- `Square30x30Logo.png`
+- `Square44x44Logo.png`
+- `Square71x71Logo.png`
+- `Square89x89Logo.png`
+- `Square107x107Logo.png`
+- `Square142x142Logo.png`
+- `Square150x150Logo.png`
+- `Square284x284Logo.png`
+- `Square310x310Logo.png`
+- `StoreLogo.png`
+
+### 注意事项
+
+1. **原始图标要求：**
+   - 建议使用正方形的高分辨率图片（至少 1024x1024）
+   - PNG 格格式，支持透明背景
+   - 设计简洁，在小尺寸下也能清晰识别
+
+2. **测试图标：**
+   - 生成后可以在不同尺寸下预览
+   - 确保在小尺寸下仍然清晰可辨
+   - 测试不同背景下的显示效果
+
+3. **更新图标：**
+   - 修改原始 `icon.png` 后重新运行脚本
+   - 所有 PNG 图标会自动更新
+   - `icon.ico` 和 `icon.icns` 需要手动重新生成
 
 ## 核心功能
 

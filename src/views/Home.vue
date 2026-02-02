@@ -1,7 +1,5 @@
 <template>
-  <div tabindex="0" autofocus
-    class="outline-none w-[680px] h-[500px] mx-auto overflow-hidden flex flex-col bg-gray-100 gap-2 pt-2"
-    @keydown="start" @keyup="handleKeyUp" @contextmenu.prevent>
+  <div tabindex="0" autofocus class="home-app" @keydown="start" @keyup="handleKeyUp" @contextmenu.prevent>
     <div class=" px-4 mx-auto flex-1 flex gap-2  w-full ">
       <StatusDisplay />
       <div class="flex flex-col items-center  gap-2 flex-1">
@@ -226,3 +224,10 @@ const comIsTriggered = computed(() => {
   );
 });
 </script>
+
+
+<style lang="scss" scoped>
+.home-app {
+  @apply outline-none w-[680px] h-[500px] mx-auto overflow-hidden flex flex-col bg-gray-100 gap-2 pt-2;
+}
+</style>
