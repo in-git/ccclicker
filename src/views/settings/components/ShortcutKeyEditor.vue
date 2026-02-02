@@ -95,16 +95,5 @@ const confirm = () => {
 </script>
 
 <style lang="scss" scoped>
-li {
-  border-bottom: 1px solid #eeeeee;
-  @apply w-full flex justify-between hover:bg-slate-1 rounded items-center px-2 h-[46px];
-  cursor: pointer;
-  .label {
-    @apply text-gray-6;
-  }
-}
-.hotkey {
-  border: 1px solid #d1d1d1;
-  @apply text-center w-[140px] h-[32px] rounded;
-}
+
 </style>

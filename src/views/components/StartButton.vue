@@ -11,18 +11,17 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { programConfig } from "../data";
+import { comIsTriggered, programConfig } from "../data";
 
 const props = defineProps<{
   isStart: boolean;
-  isTriggered?: boolean;
 }>();
 
 const buttonClass = computed(() => {
   if (!props.isStart) {
     return "stopped";
   }
-  return !props.isTriggered ? "running" : "warning";
+  return !comIsTriggered.value ? "running" : "warning";
 });
 
 const computedText = computed(() => {
@@ -30,7 +29,7 @@ const computedText = computed(() => {
   if (!props.isStart) {
     return `按${startKey}启动连点器`;
   } else {
-    if (!props.isTriggered) {
+    if (!comIsTriggered.value) {
       return `按下${shortcutKey}启动连点`;
     } else {
       return `按${shortcutKey}停止连点`;

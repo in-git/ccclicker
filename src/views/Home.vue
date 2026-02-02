@@ -1,13 +1,13 @@
 <template>
   <div tabindex="0" autofocus
-    class="outline-none w-[680px] h-[500px] mx-auto overflow-hidden flex flex-col bg-gray-100 gap-2" @keydown="start"
-    @keyup="handleKeyUp" @contextmenu.prevent>
-    <div class="w-full px-4 mx-auto flex-1 flex flex-col justify-between">
-      <div class="flex flex-col items-center justify-between gap-2">
+    class="outline-none w-[680px] h-[500px] mx-auto overflow-hidden flex flex-col bg-gray-100 gap-2 pt-2"
+    @keydown="start" @keyup="handleKeyUp" @contextmenu.prevent>
+    <div class=" px-4 mx-auto flex-1 flex gap-2  w-full ">
+      <StatusDisplay />
+      <div class="flex flex-col items-center  gap-2 flex-1">
         <ModeSelector v-model="programConfig.mode" @change="handleModeChange" />
         <Settings @change="handleConfigChange" :config="programConfig" :clickStatus="clickStatus" />
       </div>
-      <StartButton :isStart="clickStatus.isRunning" :isTriggered="comIsTriggered" />
     </div>
 
     <FooterVue :isTriggered="comIsTriggered" />
@@ -19,7 +19,7 @@ import { invoke } from "@tauri-apps/api/core";
 import { listen, UnlistenFn } from "@tauri-apps/api/event";
 import { computed, onMounted, onUnmounted } from "vue";
 import ModeSelector from "./components/ModeSelector.vue";
-import StartButton from "./components/StartButton.vue";
+import StatusDisplay from "./components/StatusDisplay.vue";
 import {
   clickStatus,
   defaultConfig,

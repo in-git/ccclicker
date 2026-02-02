@@ -34,23 +34,5 @@ defineProps<{
 </script>
 
 <style lang="scss" scoped>
-li {
-  border-bottom: 1px solid #eeeeee;
-  @apply w-full flex justify-between hover:bg-slate-1 rounded items-center px-2 h-[46px];
 
-  .label {
-    @apply text-gray-6;
-
-    .desc {
-      @apply text-xs text-gray-4;
-    }
-  }
-
-  .i-icon {
-    vertical-align:text-bottom !important;
-    display: inline-flex;
-    align-items: center;
-    height: 100%;
-  }
-}
 </style>

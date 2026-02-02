@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white py-3 px-4 w-full rounded-lg">
     <div class="text-lg font-bold text-gray-800 mb-2">模式</div>
-    <div class="flex gap-4">
+    <div class="grid grid-cols-2 gap-4">
       <div
         v-for="mode in modes"
         :key="mode.value"

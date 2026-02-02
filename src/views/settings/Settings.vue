@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-white py-3 px-4 w-full rounded-lg">
-    <div class="flex items-center gap-4">
+  <div class="bg-white py-3 px-4 w-full rounded-lg flex flex-col h-full">
+    <div class="nav">
       <div class="text-lg font-bold text-gray-800">设置</div>
       <ul flex gap-4>
         <li v-for="item in navList" @click="onChange(item.value)" :key="item.value"
@@ -53,11 +53,17 @@ defineProps<{
 const emit = defineEmits(["change"]);
 </script>
 <style lang="scss">
+.nav {
+  border-bottom: 1px solid #e9e9e9;
+  @apply flex items-center gap-4 pb-2;
+}
+
 .settings-list {
+  @apply space-y-2 h-full;
+
   li {
     border-bottom: 1px solid #eeeeee;
-    @apply w-full flex justify-between hover:bg-slate-1 rounded items-center px-2 h-[58px];
-    cursor: pointer;
+    @apply w-full flex justify-between rounded items-center py-2 h-fit;
 
     .label {
       @apply text-gray-6 text-sm;
@@ -70,6 +76,10 @@ const emit = defineEmits(["change"]);
 
   li:last-child {
     border: none !important;
+  }
+
+  .i-icon {
+    vertical-align: middle;
   }
 }
 

@@ -4,7 +4,7 @@ import './style.css'
 
 export default {
   ...DefaultTheme,
-  enhanceApp({ app }) {
+  enhanceApp({ app }: { app: any }) {
     // 注册HomePage组件
     app.component('HomePage', HomePage)
   }

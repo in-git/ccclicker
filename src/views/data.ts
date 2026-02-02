@@ -27,3 +27,8 @@ export const programConfig = ref({
 export const clickStatus = ref({
   ...defClickStatus,
 });
+export const comIsTriggered = computed(() => {
+  return (
+    clickStatus.value.isTriggered || clickStatus.value.isLongPressKeyPressed
+  );
+});
