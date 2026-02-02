@@ -22,11 +22,6 @@ export default defineConfig({
     ['meta', { name: 'twitter:description', content: '专业的鼠标连点器工具，支持自定义点击频率、热键控制，提升游戏和办公效率' }],
     ['meta', { name: 'twitter:image', content: '/ccclicker/logo.png' }]
   ],
-
-  // 站点地图和搜索引擎优化
-  sitemap: {
-    hostname: 'https://your-domain.com/ccclicker' // 替换为你的实际域名
-  },
   themeConfig: {
     logo: '/ccclicker/logo.png',
     nav: [

@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # 站点地图
-Sitemap: https://your-domain.com/ccclicker/sitemap.xml
+Sitemap: https://mx2d.cn/ccclicker/sitemap.xml
 
 # 禁止爬取的路径（如果有的话）
 # Disallow: /admin/

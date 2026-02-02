@@ -9,6 +9,7 @@
     "preview": "vitepress serve docs"
   },
   "devDependencies": {
+    "sass": "^1.97.3",
     "vitepress": "1.0.0-alpha.28",
     "vue": "3.2.44"
   },

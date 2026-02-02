@@ -20,15 +20,12 @@ import NavBar from './NavBar.vue';
 <style scoped>
 .homepage {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
-  background-size: 400% 400%;
-  animation: gradientShift 15s ease infinite;
+  background-image: url('../assets/background.webp');
+  background-size: cover;
+  background-position: center;
   position: relative;
   overflow: auto;
 }
 
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
+
 </style>

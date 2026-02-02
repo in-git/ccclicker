@@ -7,7 +7,7 @@
 
     <div class="hero-content">
       <!-- 主标题 -->
-      <h1 class="hero-title">连点点 轻松做自己</h1>
+      <h1 class="hero-title">连点点 连点 超简单</h1>
 
       <!-- 下载区域 -->
       <DownloadSection />
@@ -57,7 +57,6 @@ import DownloadSection from './DownloadSection.vue';
 .hero-title {
   font-size: 64px;
   font-weight: 300;
-  color: white;
   margin: 0 0 48px 0;
   text-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   letter-spacing: 2px;

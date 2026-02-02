@@ -1,10 +1,7 @@
 <template>
   <footer class="footer">
     <div class="footer-content">
-      <div class="footer-links">
-        <span>服务条款</span>
-        <span>合作伙伴</span>
-      </div>
+
       <div class="copyright">
         <span>Copyright © 2024 连点点. All Rights Reserved. 保留所有权利</span>
       </div>
@@ -42,10 +39,6 @@
 .footer-links span {
   cursor: pointer;
   transition: color 0.3s ease;
-}
-
-.footer-links span:hover {
-  color: white;
 }
 
 /* 响应式设计 */

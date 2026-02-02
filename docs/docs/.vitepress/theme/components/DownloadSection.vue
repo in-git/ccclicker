@@ -16,11 +16,6 @@
       <span class="date">2024-01-16</span>
     </div>
 
-    <!-- 更多下载选项 -->
-    <div class="more-downloads">
-      <span>更多 Windows 版本下载</span>
-      <span class="arrow-icon">→</span>
-    </div>
   </div>
 </template>
 
@@ -68,7 +63,6 @@
 .version-info {
   display: flex;
   gap: 16px;
-  color: rgba(255, 255, 255, 0.8);
   font-size: 14px;
 }
 
@@ -80,19 +74,7 @@
   opacity: 0.7;
 }
 
-.more-downloads {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 14px;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
 
-.more-downloads:hover {
-  color: white;
-}
 
 /* 响应式设计 */
 @media (max-width: 480px) {

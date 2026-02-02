@@ -2,6 +2,7 @@
   <nav class="navbar">
     <div class="nav-container">
       <div class="nav-logo">
+        <img src="/logo.png" width="42" alt="">
         <span>连点点</span>
       </div>
       <div class="nav-links">
@@ -13,7 +14,7 @@
   </nav>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .navbar {
   position: fixed;
   top: 0;
@@ -35,12 +36,18 @@
   height: 60px;
 }
 
-.nav-logo span {
-  font-size: 24px;
-  font-weight: bold;
-  color: white;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+.nav-logo {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+
+  span {
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
 }
+
 
 .nav-links {
   display: flex;
@@ -54,10 +61,6 @@
   font-weight: 500;
   transition: color 0.3s ease;
   position: relative;
-}
-
-.nav-link:hover {
-  color: white;
 }
 
 .nav-link::after {
