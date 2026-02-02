@@ -1,7 +1,6 @@
 <template>
   <div class="footer">
     <div class="flex text-nowrap gap-4">
-      <Running :isTriggered="isTriggered" />
       <ClickCounter />
     </div>
 
@@ -27,7 +26,6 @@ import { Github, TencentQq } from '@icon-park/vue-next';
 import { openUrl } from '@tauri-apps/plugin-opener';
 import { message } from 'ant-design-vue';
 import ClickCounter from "./components/ClickCounter.vue";
-import Running from "./components/Running.vue";
 
 const contact = "444891953";
 const github = "https://github.com/in-git/ccclicker"
@@ -52,6 +50,6 @@ const gotoGithub = async () => {
 <style lang="scss" scoped>
 .footer {
   border-top: 1px solid #dadada;
-  @apply w-full text-sm flex justify-between items-center px-3 bg-slate-2 py-1 text-xs;
+  @apply w-full text-sm flex justify-between items-center px-3 py-1 text-xs;
 }
 </style>

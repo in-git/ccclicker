@@ -228,6 +228,6 @@ const comIsTriggered = computed(() => {
 
 <style lang="scss" scoped>
 .home-app {
-  @apply outline-none w-[680px] h-[500px] mx-auto overflow-hidden flex flex-col bg-gray-100 gap-2 pt-2;
+  @apply outline-none w-[680px] h-[500px] mx-auto overflow-hidden flex flex-col bg-gray-100 gap-2 pt-0;
 }
 </style>

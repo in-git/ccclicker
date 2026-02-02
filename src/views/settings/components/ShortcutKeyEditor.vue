@@ -1,6 +1,6 @@
 <template>
   <li>
-    <div class="label">长按触发快捷键</div>
+    <div class="label">触发热键</div>
     <div class="cursor-pointer">
       <Popover
         @openChange="onOpenChange"

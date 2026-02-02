@@ -1,7 +1,6 @@
 <template>
   <div class="bg-white py-3 px-4 w-full rounded-lg flex flex-col h-full">
     <div class="nav">
-      <div class="text-lg font-bold text-gray-800">设置</div>
       <ul flex gap-4>
         <li v-for="item in navList" @click="onChange(item.value)" :key="item.value"
           :class="{ 'active': active === item.value }" class="text-gray-5 cursor-pointer">

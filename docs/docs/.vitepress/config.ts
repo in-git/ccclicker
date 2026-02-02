@@ -8,7 +8,7 @@ export default defineConfig({
     ]
   },
   title: '连点点',
-  description: '高效便捷的连点器工具',
+  description: '连点,超简单',
   lang: 'zh-CN',
 
   // 子路径部署配置

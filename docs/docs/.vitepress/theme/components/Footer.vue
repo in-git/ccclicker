@@ -1,8 +1,11 @@
 <template>
-  <footer class="absolute bottom-0 left-0 right-0 footer">
-    <div class="max-w-6xl mx-auto px-6 py-6 flex justify-between items-center text-xs md:flex-col md:gap-4 md:text-center footer-content">
-      <div>
-        <span>Copyright © 2024 连点点. All Rights Reserved. 保留所有权利</span>
+  <footer class="footer">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+      <div class="flex justify-center items-center text-xs sm:text-sm footer-content">
+        <div class="text-center">
+          <span class="block sm:inline">Copyright © 2024 连点点. All Rights Reserved.</span>
+          <span class="block sm:inline sm:ml-2">保留所有权利</span>
+        </div>
       </div>
     </div>
   </footer>
@@ -10,12 +13,11 @@
 
 <style scoped>
 .footer {
-  background: rgba(0, 0, 0, 0.2);
+  background: white;
   backdrop-filter: blur(10px);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
 }
 
-.footer-content {
-  color: rgba(255, 255, 255, 0.7);
-}
+
 </style>
