@@ -1,5 +1,5 @@
 <template>
-  <div tabindex="0" autofocus class="home-app" @keydown="start" @keyup="handleKeyUp" @contextmenu.prevent>
+  <div tabindex="0" autofocus class="home-app" @keydown="handleKeydown" @keyup="handleKeyUp" @contextmenu.prevent>
     <div class=" px-4 mx-auto flex-1 flex gap-2  w-full ">
       <StatusDisplay />
       <div class="flex flex-col items-center  gap-2 flex-1">
@@ -28,6 +28,7 @@ import FooterVue from "./footer/Footer.vue";
 import Settings from "./settings/Settings.vue";
 import { IKeyboardEvent } from "./types";
 
+const SYS_KEYS = ['Ctrl', 'Alt', 'Shift']
 let intervalId: NodeJS.Timeout | undefined;
 let unlisten: UnlistenFn | undefined = undefined;
 
@@ -58,6 +59,7 @@ const parseHotkey = (hotkey: string) => {
 
 const compareHotkeys = (configKey: string, event: IKeyboardEvent) => {
   const parsed = parseHotkey(configKey);
+
   return (
     parsed.key.toLowerCase() === event.key.toLowerCase() &&
     parsed.ctrl === event.ctrl &&
@@ -67,19 +69,19 @@ const compareHotkeys = (configKey: string, event: IKeyboardEvent) => {
   );
 };
 
-const start = () => {
+const getBrowserKey = () => {
   const targetKey = window.event as KeyboardEvent;
-  runByKey({
+  return {
     key: targetKey.key,
     ctrl: targetKey.ctrlKey,
     alt: targetKey.altKey,
     shift: targetKey.shiftKey,
     meta: targetKey.metaKey,
     isPress: true,
-  });
-};
+  }
+}
 
-const runByKey = (event: IKeyboardEvent) => {
+const keydownEvent = (event: IKeyboardEvent) => {
   /* 启动键 */
   if (compareHotkeys(programConfig.value.startKey, event)) {
     window.event?.preventDefault();
@@ -104,16 +106,8 @@ const runByKey = (event: IKeyboardEvent) => {
     }
   }
 };
-const handleKeyUp = () => {
-  const targetKey = window.event as KeyboardEvent;
-  const event: IKeyboardEvent = {
-    key: targetKey.key,
-    ctrl: targetKey.ctrlKey,
-    alt: targetKey.altKey,
-    shift: targetKey.shiftKey,
-    meta: targetKey.metaKey,
-    isPress: false,
-  };
+
+const keyupEvent = (event: IKeyboardEvent) => {
   if (programConfig.value.mode === "auto") {
     return
   }
@@ -121,6 +115,7 @@ const handleKeyUp = () => {
     clickStatus.value.isLongPressKeyPressed = false;
   }
 };
+
 async function saveConfig() {
   try {
     await invoke("save_config", {
@@ -155,9 +150,10 @@ async function getKeyboardEvent() {
     await invoke("start_keyboard_listener");
     unlisten = await listen("keyboard-event", (event: any) => {
       const keyEvent = event.payload as IKeyboardEvent;
-      runByKey(keyEvent);
-      if(!keyEvent.isPress){
-        handleKeyUp();
+      keydownEvent(keyEvent);
+      if (!keyEvent.isPress) {
+        keyupEvent(keyEvent)
+
       }
     });
   } catch (error) {
@@ -206,6 +202,10 @@ const stopInterval = () => {
     intervalId = undefined;
   }
 };
+
+const handleKeydown = () => keydownEvent(getBrowserKey());
+
+const handleKeyUp = () => keyupEvent(getBrowserKey());
 
 const restartInterval = () => {
   stopInterval();
