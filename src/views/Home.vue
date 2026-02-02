@@ -114,6 +114,9 @@ const handleKeyUp = () => {
     meta: targetKey.metaKey,
     isPress: false,
   };
+  if (programConfig.value.mode === "auto") {
+    return
+  }
   if (compareHotkeys(programConfig.value.shortcutKey, event)) {
     clickStatus.value.isLongPressKeyPressed = false;
   }
@@ -153,6 +156,9 @@ async function getKeyboardEvent() {
     unlisten = await listen("keyboard-event", (event: any) => {
       const keyEvent = event.payload as IKeyboardEvent;
       runByKey(keyEvent);
+      if(!keyEvent.isPress){
+        handleKeyUp();
+      }
     });
   } catch (error) {
     console.error("Failed to start keyboard listener:", error);

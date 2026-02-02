@@ -3,35 +3,24 @@
     <div
       class="key-button"
       :style="{ height: height + 'px', fontSize: fontSize + 'px' }"
-      v-if="!edit"
     >
       {{ inputValue }}
     </div>
-    <input
-      type="text"
-      v-model="text"
-      placeholder="请输入按键"
-      class="w-full h-[32px] text-center"
-      v-else
-    />
   </div>
 </template>
 
 <script setup lang="ts">
 const inputValue = defineModel();
 
-const text = ref();
 // 定义props，支持动态传参+样式自定义
 withDefaults(
   defineProps<{
     height?: number;
     fontSize?: number;
-    edit?: boolean;
   }>(),
   {
     height: 32,
     fontSize: 14,
-    edit: false,
   },
 );
 </script>
@@ -55,5 +44,6 @@ withDefaults(
   line-height: 1;
   width: fit-content;
   padding: 0 8px;
+  min-width: 32px;
 }
 </style>

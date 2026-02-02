@@ -2,7 +2,7 @@ import { ProgramConfig } from "./types";
 
 export const defaultConfig: ProgramConfig = {
   shortcutKey: "F4", // 长按触发快捷键
-  startKey: "F3", // 开始按键
+  startKey: "F9", // 开始按键
   interval: 500, // 点击间隔
   mode: "auto",
   triggerKey: "left", // 触发按键

@@ -93,7 +93,7 @@ const confirm = () => {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 
 .hotkey {
   border: 1px solid #d1d1d1;
