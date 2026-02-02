@@ -12,18 +12,6 @@ pub struct AppConfig {
     pub mode: String,
 }
 
-impl Default for AppConfig {
-    fn default() -> Self {
-        AppConfig {
-            shortcut_key: "F6".to_string(),
-            start_key: "F3".to_string(),
-            stop_key: "Ctrl+F3".to_string(),
-            interval: 500,
-            mode: "auto".to_string(),
-        }
-    }
-}
-
 fn get_config_path(app: &AppHandle) -> PathBuf {
     let app_data_dir = app.path().app_data_dir().unwrap_or_else(|_| {
         std::env::current_dir().unwrap()
@@ -54,9 +42,7 @@ pub fn load_config(app: AppHandle) -> Result<AppConfig, String> {
     let config_path = get_config_path(&app);
 
     if !config_path.exists() {
-        let default_config = AppConfig::default();
-        let _ = save_config(app.clone(), default_config.clone());
-        return Ok(default_config);
+        return Err("Config file not found".to_string());
     }
 
     let config_content = fs::read_to_string(&config_path)
@@ -69,8 +55,7 @@ pub fn load_config(app: AppHandle) -> Result<AppConfig, String> {
 }
 
 #[tauri::command]
-pub fn reset_config(app: AppHandle) -> Result<AppConfig, String> {
-    let default_config = AppConfig::default();
+pub fn reset_config(app: AppHandle, default_config: AppConfig) -> Result<AppConfig, String> {
     save_config(app, default_config.clone())?;
     Ok(default_config)
 }

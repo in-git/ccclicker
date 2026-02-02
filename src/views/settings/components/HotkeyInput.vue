@@ -23,7 +23,7 @@
 import { Popover, message } from "ant-design-vue";
 import { ref, useTemplateRef } from 'vue';
 const modelValue = defineModel<string>();
-const props = defineProps<{
+defineProps<{
     label: string;
     placeholder?: string;
 }>();

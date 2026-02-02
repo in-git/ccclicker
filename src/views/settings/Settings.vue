@@ -11,20 +11,19 @@
     <ul class="settings-list">
       <template v-if="active === 'common'">
         <ToggleRunningRunning :clickStatus="clickStatus" />
-        <TriggerKeySelector v-model="config.triggerKey" @change="emit('change')" />
-
-        <IntervalInput v-model="config.interval" @change="emit('change')" />
+        <TriggerKeySelector v-model="programConfig.triggerKey" @change="emit('change')" />
+        <IntervalInput v-model="programConfig.interval" @change="emit('change')" />
       </template>
       <template v-if="active === 'hotkey'">
-        <ShortcutKeyEditor v-model="config.shortcutKey" @change="emit('change')" />
-        <HotkeyEditor v-model="config.startKey" @change="emit('change')" />
+        <ShortcutKeyEditor v-model="programConfig.shortcutKey" @change="emit('change')" />
+        <HotkeyEditor v-model="programConfig.startKey" @change="emit('change')" />
       </template>
     </ul>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ClickStatus, ProgramConfig } from "../types";
+import { clickStatus, programConfig } from '../data';
 import HotkeyEditor from "./components/HotkeyEditor.vue";
 import IntervalInput from "./components/IntervalInput.vue";
 import ShortcutKeyEditor from './components/ShortcutKeyEditor.vue';
@@ -44,10 +43,6 @@ const onChange = (value: string) => {
   active.value = value
 }
 const active = ref(navList[0].value)
-defineProps<{
-  config: ProgramConfig;
-  clickStatus: ClickStatus;
-}>();
 
 const emit = defineEmits(["change"]);
 </script>

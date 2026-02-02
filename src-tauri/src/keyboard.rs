@@ -56,44 +56,46 @@ fn handle_event(app: &AppHandle, event: Event) {
         EventType::KeyPress(key) => {
             update_modifier(key, true);
 
-            // 只有非修饰键按下时才触发事件（避免 Ctrl+Ctrl 这种情况）
-            if !is_modifier(key) {
-                let modifiers = get_modifiers();
-                let key_name = format!("{:?}", key);
+            let modifiers = get_modifiers();
+            let key_name = if is_modifier(key) {
+                get_modifier_name(key)
+            } else {
+                format!("{:?}", key)
+            };
 
-                let payload = KeyboardEvent {
-                    key: key_name.clone(),
-                    ctrl: modifiers.0,
-                    alt: modifiers.1,
-                    shift: modifiers.2,
-                    meta: modifiers.3,
-                    raw_combination: build_combo_string(&key_name, modifiers),
-                    is_press: true,
-                };
+            let payload = KeyboardEvent {
+                key: key_name.clone(),
+                ctrl: modifiers.0,
+                alt: modifiers.1,
+                shift: modifiers.2,
+                meta: modifiers.3,
+                raw_combination: build_combo_string(&key_name, modifiers),
+                is_press: true,
+            };
 
-                let _ = app.emit("keyboard-event", payload);
-            }
+            let _ = app.emit("keyboard-event", payload);
         }
         EventType::KeyRelease(key) => {
             update_modifier(key, false);
 
-            // 只有非修饰键释放时才也触发事件
-            if !is_modifier(key) {
-                let modifiers = get_modifiers();
-                let key_name = format!("{:?}", key);
+            let modifiers = get_modifiers();
+            let key_name = if is_modifier(key) {
+                get_modifier_name(key)
+            } else {
+                format!("{:?}", key)
+            };
 
-                let payload = KeyboardEvent {
-                    key: key_name.clone(),
-                    ctrl: modifiers.0,
-                    alt: modifiers.1,
-                    shift: modifiers.2,
-                    meta: modifiers.3,
-                    raw_combination: build_combo_string(&key_name, modifiers),
-                    is_press: false,
-                };
+            let payload = KeyboardEvent {
+                key: key_name.clone(),
+                ctrl: modifiers.0,
+                alt: modifiers.1,
+                shift: modifiers.2,
+                meta: modifiers.3,
+                raw_combination: build_combo_string(&key_name, modifiers),
+                is_press: false,
+            };
 
-                let _ = app.emit("keyboard-event", payload);
-            }
+            let _ = app.emit("keyboard-event", payload);
         }
         _ => {}
     }
@@ -117,6 +119,16 @@ fn is_modifier(key: Key) -> bool {
         Key::ControlLeft | Key::ControlRight | Key::Alt | Key::AltGr |
         Key::ShiftLeft | Key::ShiftRight | Key::MetaLeft | Key::MetaRight
     )
+}
+
+fn get_modifier_name(key: Key) -> String {
+    match key {
+        Key::ControlLeft | Key::ControlRight => "Ctrl".to_string(),
+        Key::Alt | Key::AltGr => "Alt".to_string(),
+        Key::ShiftLeft | Key::ShiftRight => "Shift".to_string(),
+        Key::MetaLeft | Key::MetaRight => "Meta".to_string(),
+        _ => format!("{:?}", key),
+    }
 }
 
 fn get_modifiers() -> (bool, bool, bool, bool) {

@@ -4,7 +4,7 @@
       <StatusDisplay />
       <div class="flex flex-col items-center  gap-2 flex-1">
         <ModeSelector v-model="programConfig.mode" @change="handleModeChange" />
-        <Settings @change="handleConfigChange" :config="programConfig" :clickStatus="clickStatus" />
+        <Settings @change="handleConfigChange" />
       </div>
     </div>
 
@@ -38,7 +38,7 @@ async function loadConfig() {
     programConfig.value = {
       ...defaultConfig,
       ...savedConfig,
-    };
+    }
   } catch (error) {
     console.error("Failed to load config:", error);
   }
@@ -57,16 +57,34 @@ const parseHotkey = (hotkey: string) => {
   return { key, ctrl, alt, shift, meta };
 };
 
-const compareHotkeys = (configKey: string, event: IKeyboardEvent) => {
-  const parsed = parseHotkey(configKey);
+const compareHotkeys = (event: IKeyboardEvent, comparedKey: string) => {
+  const { shortcutKey } = programConfig.value
+  const parsed = parseHotkey(shortcutKey);
+  const key = event.key.toLocaleLowerCase()
+  const targetKey = comparedKey.toLocaleLowerCase()
+  /* 组合键 */
+  if (key.includes('+')) {
+    return (
+      parsed.key.toLowerCase() === key &&
+      parsed.ctrl === event.ctrl &&
+      parsed.alt === event.alt &&
+      parsed.shift === event.shift &&
+      parsed.meta === event.meta
+    );
+  }
+  else if (!SYS_KEYS.includes(key)) {
+    return targetKey === key
+  } else {
 
-  return (
-    parsed.key.toLowerCase() === event.key.toLowerCase() &&
-    parsed.ctrl === event.ctrl &&
-    parsed.alt === event.alt &&
-    parsed.shift === event.shift &&
-    parsed.meta === event.meta
-  );
+    if (key === 'ctrl' && event.ctrl) {
+      return true
+    } else if (key === 'alt' && event.alt) {
+      return true
+    } else if (key === 'shift' && event.shift) {
+      return true
+    }
+  }
+
 };
 
 const getBrowserKey = () => {
@@ -83,7 +101,7 @@ const getBrowserKey = () => {
 
 const keydownEvent = (event: IKeyboardEvent) => {
   /* 启动键 */
-  if (compareHotkeys(programConfig.value.startKey, event)) {
+  if (compareHotkeys(event, programConfig.value.startKey)) {
     window.event?.preventDefault();
     if (event.isPress) {
       changeStatus();
@@ -91,7 +109,7 @@ const keydownEvent = (event: IKeyboardEvent) => {
     return
   }
   /* 触发键 */
-  if (compareHotkeys(programConfig.value.shortcutKey, event)) {
+  if (compareHotkeys(event, programConfig.value.shortcutKey)) {
     window.event?.preventDefault();
     if (!clickStatus.value.isRunning) {
       restartInterval();
@@ -111,17 +129,17 @@ const keyupEvent = (event: IKeyboardEvent) => {
   if (programConfig.value.mode === "auto") {
     return
   }
-  if (compareHotkeys(programConfig.value.shortcutKey, event)) {
-    clickStatus.value.isLongPressKeyPressed = false;
+  else {
+    if (compareHotkeys(event, programConfig.value.shortcutKey)) {
+      clickStatus.value.isLongPressKeyPressed = false;
+    }
   }
 };
 
 async function saveConfig() {
   try {
     await invoke("save_config", {
-      config: {
-        ...programConfig.value,
-      },
+      config: programConfig.value,
     });
   } catch (error) {
     console.error("Failed to save config:", error);
@@ -150,10 +168,11 @@ async function getKeyboardEvent() {
     await invoke("start_keyboard_listener");
     unlisten = await listen("keyboard-event", (event: any) => {
       const keyEvent = event.payload as IKeyboardEvent;
-      keydownEvent(keyEvent);
+
       if (!keyEvent.isPress) {
         keyupEvent(keyEvent)
-
+      } else {
+        keydownEvent(keyEvent);
       }
     });
   } catch (error) {
