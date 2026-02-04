@@ -1,10 +1,13 @@
-import { useAppStore } from '@store/modules/app';
-import { computed, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 export function useTheme() {
-  const appStore = useAppStore();
+  const theme = ref<'light' | 'dark'>('light');
 
-  const isDark = computed(() => appStore.theme === 'dark');
+  const isDark = computed(() => theme.value === 'dark');
+
+  const toggleTheme = () => {
+    theme.value = theme.value === 'light' ? 'dark' : 'light';
+  };
 
   watch(isDark, (dark) => {
     if (dark) {
@@ -16,6 +19,6 @@ export function useTheme() {
 
   return {
     isDark,
-    toggleTheme: () => appStore.toggleTheme(),
+    toggleTheme,
   };
 }

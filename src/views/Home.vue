@@ -43,19 +43,6 @@ async function loadConfig() {
   }
 }
 
-const parseHotkey = (hotkey: string) => {
-  const parts = hotkey.split("+").map((p) => p.toLowerCase().trim());
-  const key = parts[parts.length - 1];
-  const ctrl = parts.includes("ctrl");
-  const alt = parts.includes("alt");
-  const shift = parts.includes("shift");
-  const meta =
-    parts.includes("meta") ||
-    parts.includes("win") ||
-    parts.includes("command");
-  return { key, ctrl, alt, shift, meta };
-};
-
 const compareHotkeys = (event: IKeyboardEvent, comparedKey: string) => {
 
   const key = event.key.toLocaleLowerCase()
