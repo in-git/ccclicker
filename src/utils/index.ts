@@ -54,3 +54,7 @@ export function sleep(ms: number): Promise<void> {
 export function generateId(): string {
   return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 }
+
+// 导出快捷键工具函数
+export * from './hotkey';
+

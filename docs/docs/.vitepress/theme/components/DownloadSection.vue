@@ -2,7 +2,8 @@
   <div class="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex flex-col items-center gap-4">
       <a
-        href="https://github.com/in-git/ccclicker/releases"
+        href="/连点点.exe"
+        download="连点点.exe"
         target="_blank"
         rel="noopener noreferrer"
         class="inline-flex items-center gap-3 px-8 py-4 rounded-full no-underline text-base font-semibold transition-all duration-300 sm:px-6 sm:py-3 sm:text-sm xs:px-4 xs:py-2.5 xs:text-xs download-btn"

@@ -14,6 +14,7 @@
 
 <script setup lang="ts">
 import { useConfigStore } from '@/store/config';
+import { compareHotkeys } from '@/utils';
 import { invoke } from "@tauri-apps/api/core";
 import { listen, UnlistenFn } from "@tauri-apps/api/event";
 import { computed, onMounted, onUnmounted } from "vue";
@@ -27,7 +28,6 @@ import FooterVue from "./footer/Footer.vue";
 import Settings from "./settings/Settings.vue";
 import { IKeyboardEvent } from "./types";
 
-const SYS_KEYS = ['Ctrl', 'Alt', 'Shift']
 let intervalId: NodeJS.Timeout | undefined;
 let unlisten: UnlistenFn | undefined = undefined;
 
@@ -43,55 +43,7 @@ async function loadConfig() {
   }
 }
 
-const compareHotkeys = (event: IKeyboardEvent, comparedKey: string) => {
-
-  const key = event.key.toLocaleLowerCase()
-  const targetKey = comparedKey.toLocaleLowerCase()
-  /* 组合键 */
-  if (targetKey.includes('+')) {
-    let prefixKey = ''
-    if (event.ctrl) {
-      prefixKey += 'ctrl+'
-    }
-    if (event.alt) {1
-      prefixKey += 'alt+'
-    }
-    if (event.shift) {
-      prefixKey += 'shift+'
-    }
-    if (event.meta) {
-      prefixKey += 'meta+'
-    }
-    let fullKey = prefixKey + key
-    /* 对比targetKey和fullKey,要用split拆分对比 */
-    let targetKeyParts = targetKey.split('+')
-    let fullKeyParts = fullKey.split('+')
-    if (targetKeyParts.length !== fullKeyParts.length) {
-      return false
-    }
-    for (let i = 0; i < targetKeyParts.length; i++) {
-      if (targetKeyParts[i] !== fullKeyParts[i]) {
-        return false
-      }
-    }
-    return true
-  }
-  else if (!SYS_KEYS.includes(key)) {
-    return targetKey === key
-  } else {
-
-    if (key === 'ctrl' && event.ctrl) {
-      return true
-    } else if (key === 'alt' && event.alt) {
-      return true
-    } else if (key === 'shift' && event.shift) {
-      return true
-    }
-  }
-
-};
-
-const getBrowserKey = () => {
+const getBrowserKey = (): IKeyboardEvent => {
   const targetKey = window.event as KeyboardEvent;
   return {
     key: targetKey.key,

@@ -20,6 +20,7 @@
 </template>
 
 <script setup lang="ts">
+import { keyEventToHotkey } from '@/utils';
 import { Popover, message } from "ant-design-vue";
 import { ref, useTemplateRef } from 'vue';
 const modelValue = defineModel<string>();
@@ -36,13 +37,11 @@ const emit = defineEmits<{
 const inputRef = useTemplateRef<HTMLInputElement>("inputRef");
 const popVisible = ref(false);
 const hotkey = ref("");
-let currentMainKey = "";
 
 const onOpenChange = (vis: boolean) => {
     if (vis) {
         // 每次打开清空上次录制状态，聚焦输入框
         hotkey.value = "";
-        currentMainKey = "";
         setTimeout(() => inputRef.value?.focus(), 50);
     }
 };
@@ -54,7 +53,6 @@ const onKeyDown = (e: KeyboardEvent) => {
     // 1. 特殊键处理
     if (e.key === "Backspace") {
         hotkey.value = "";
-        currentMainKey = "";
         return;
     }
     if (e.key === "Enter") {
@@ -62,31 +60,8 @@ const onKeyDown = (e: KeyboardEvent) => {
         return;
     }
 
-    // 2. 识别修饰键
-    const modifiers = [];
-    if (e.ctrlKey) modifiers.push("Ctrl");
-    if (e.shiftKey) modifiers.push("Shift");
-    if (e.altKey) modifiers.push("Alt");
-    if (e.metaKey) modifiers.push("Meta");
-
-    // 3. 识别主键
-    const isModifierOnly = ["Control", "Shift", "Alt", "Meta"].includes(e.key);
-    if (!isModifierOnly) {
-        let mainKey = e.key;
-        if (mainKey === " ") mainKey = "Space";
-        if (mainKey.length === 1) mainKey = mainKey.toUpperCase();
-        currentMainKey = mainKey;
-    } else {
-        currentMainKey = "";
-    }
-
-    // 4. 拼接显示
-    const prefix = modifiers.join("+");
-    if (currentMainKey) {
-        hotkey.value = prefix ? `${prefix}+${currentMainKey}` : currentMainKey;
-    } else {
-        hotkey.value = prefix;
-    }
+    // 2. 使用统一的工具函数处理快捷键
+    hotkey.value = keyEventToHotkey(e);
 };
 
 const handleBlur = () => {
