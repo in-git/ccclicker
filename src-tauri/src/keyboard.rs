@@ -60,7 +60,7 @@ fn handle_event(app: &AppHandle, event: Event) {
             let key_name = if is_modifier(key) {
                 get_modifier_name(key)
             } else {
-                format!("{:?}", key)
+                normalize_key_name(key)
             };
 
             let payload = KeyboardEvent {
@@ -82,7 +82,7 @@ fn handle_event(app: &AppHandle, event: Event) {
             let key_name = if is_modifier(key) {
                 get_modifier_name(key)
             } else {
-                format!("{:?}", key)
+                normalize_key_name(key)
             };
 
             let payload = KeyboardEvent {
@@ -148,4 +148,20 @@ fn build_combo_string(key_str: &str, mods: (bool, bool, bool, bool)) -> String {
     if mods.3 { combo.push_str("Meta+"); }
     combo.push_str(key_str);
     combo
+}
+
+fn normalize_key_name(key: Key) -> String {
+    match key {
+        Key::Num1 => "1".to_string(),
+        Key::Num2 => "2".to_string(),
+        Key::Num3 => "3".to_string(),
+        Key::Num4 => "4".to_string(),
+        Key::Num5 => "5".to_string(),
+        Key::Num6 => "6".to_string(),
+        Key::Num7 => "7".to_string(),
+        Key::Num8 => "8".to_string(),
+        Key::Num9 => "9".to_string(),
+        Key::Num0 => "0".to_string(),
+        _ => format!("{:?}", key),
+    }
 }

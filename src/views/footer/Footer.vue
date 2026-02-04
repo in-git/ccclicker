@@ -5,16 +5,10 @@
     </div>
 
     <div class="flex items-center cursor-pointer gap-2">
-      <a-tooltip title="复制QQ号" placement="topRight">
-        <span class="flex items-center gap-1" @click="copyFeedback">
-          反馈
-          <TencentQq />
-        </span>
-      </a-tooltip>
-      <a-tooltip title="转到开源地址" placement="topRight">
-        <span class="flex items-center gap-1" @click="gotoGithub">
-          开源地址
-          <Github />
+      <a-tooltip v-for="link in footerLinks" :key="link.text" :title="link.title" placement="topRight">
+        <span class="icon" @click="link.handler">
+          {{ link.text }}
+          <component :is="link.icon" />
         </span>
       </a-tooltip>
     </div>
@@ -22,13 +16,14 @@
 </template>
 
 <script setup lang="ts">
-import { Github, TencentQq } from '@icon-park/vue-next';
+import { Github, Help, TencentQq } from '@icon-park/vue-next';
 import { openUrl } from '@tauri-apps/plugin-opener';
 import { message } from 'ant-design-vue';
 import ClickCounter from "./components/ClickCounter.vue";
 
 const contact = "444891953";
-const github = "https://github.com/in-git/ccclicker"
+const github = "https://github.com/in-git/ccclicker";
+const docUrl = 'https://app.mx2d.cn/ccclicker'
 defineProps<{
   isTriggered?: boolean;
 }>();
@@ -42,14 +37,44 @@ const copyFeedback = async () => {
   }
 };
 
+const gotoDoc = async () => {
+  await openUrl(docUrl);
+};
+
 const gotoGithub = async () => {
   await openUrl(github);
 };
+
+const footerLinks = [
+  {
+    text: '帮助',
+    title: '帮助',
+    icon: Help,
+    handler: gotoDoc
+  },
+  {
+    text: '反馈',
+    title: '复制QQ号',
+    icon: TencentQq,
+    handler: copyFeedback
+  },
+  {
+    text: '开源地址',
+    title: '转到开源地址',
+    icon: Github,
+    handler: gotoGithub
+  }
+];
 </script>
 
 <style lang="scss" scoped>
 .footer {
   border-top: 1px solid #dadada;
   @apply w-full text-sm flex justify-between items-center px-3 py-1 text-xs;
+}
+
+.icon {
+
+  @apply flex items-center gap-1;
 }
 </style>

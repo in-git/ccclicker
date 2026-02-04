@@ -10,12 +10,16 @@
 </template>
 
 <script setup lang="ts">
+import { useConfigStore } from "@/store/config";
 import { computed } from "vue";
-import { comIsTriggered, programConfig } from "../data";
+import { comIsTriggered } from "../data";
 
 const props = defineProps<{
   isStart: boolean;
 }>();
+
+const configStore = useConfigStore();
+const programConfig = computed(() => configStore.config);
 
 const buttonClass = computed(() => {
   if (!props.isStart) {

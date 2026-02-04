@@ -23,12 +23,16 @@
 </template>
 
 <script setup lang="ts">
-import { clickStatus, programConfig } from '../data';
+import { useConfigStore } from '../../store/config';
+import { clickStatus } from '../data';
 import HotkeyEditor from "./components/HotkeyEditor.vue";
 import IntervalInput from "./components/IntervalInput.vue";
 import ShortcutKeyEditor from './components/ShortcutKeyEditor.vue';
 import ToggleRunningRunning from "./components/ToggleRunningRunning.vue";
 import TriggerKeySelector from "./components/TriggerKeySelector.vue";
+
+const configStore = useConfigStore();
+const programConfig = computed(() => configStore.config);
 const navList = [
   {
     label: "常用配置",
@@ -72,9 +76,7 @@ const emit = defineEmits(["change"]);
     border: none !important;
   }
 
-  .i-icon {
-    vertical-align: middle;
-  }
+
 }
 
 .active {

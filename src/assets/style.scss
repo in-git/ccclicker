@@ -1,18 +1,28 @@
 @import 'normalize.css';
+
 body {
   margin: 0;
 }
-*{
+
+* {
   user-select: none;
 }
-button,input{
+
+button,
+input {
   outline: none;
   border: none;
   padding: 0;
   font-size: 14px;
 }
-ul{
+
+ul {
   margin: 0;
   list-style: none;
   padding: 0;
+}
+
+.i-icon {
+  vertical-align: middle !important;
+  display: inline-flex;
 }

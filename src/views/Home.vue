@@ -13,6 +13,7 @@
 </template>
 
 <script setup lang="ts">
+import { useConfigStore } from '@/store/config';
 import { invoke } from "@tauri-apps/api/core";
 import { listen, UnlistenFn } from "@tauri-apps/api/event";
 import { computed, onMounted, onUnmounted } from "vue";
@@ -20,9 +21,7 @@ import ModeSelector from "./components/ModeSelector.vue";
 import StatusDisplay from "./components/StatusDisplay.vue";
 import {
   clickStatus,
-  defaultConfig,
   defClickStatus,
-  programConfig,
 } from "./data";
 import FooterVue from "./footer/Footer.vue";
 import Settings from "./settings/Settings.vue";
@@ -32,13 +31,13 @@ const SYS_KEYS = ['Ctrl', 'Alt', 'Shift']
 let intervalId: NodeJS.Timeout | undefined;
 let unlisten: UnlistenFn | undefined = undefined;
 
+const configStore = useConfigStore();
+const programConfig = computed(() => configStore.config);
+
 async function loadConfig() {
   try {
     const savedConfig = await invoke<any>("load_config");
-    programConfig.value = {
-      ...defaultConfig,
-      ...savedConfig,
-    }
+    configStore.updateConfig(savedConfig);
   } catch (error) {
     console.error("Failed to load config:", error);
   }
@@ -58,19 +57,37 @@ const parseHotkey = (hotkey: string) => {
 };
 
 const compareHotkeys = (event: IKeyboardEvent, comparedKey: string) => {
-  const { shortcutKey } = programConfig.value
-  const parsed = parseHotkey(shortcutKey);
+
   const key = event.key.toLocaleLowerCase()
   const targetKey = comparedKey.toLocaleLowerCase()
   /* 组合键 */
-  if (key.includes('+')) {
-    return (
-      parsed.key.toLowerCase() === key &&
-      parsed.ctrl === event.ctrl &&
-      parsed.alt === event.alt &&
-      parsed.shift === event.shift &&
-      parsed.meta === event.meta
-    );
+  if (targetKey.includes('+')) {
+    let prefixKey = ''
+    if (event.ctrl) {
+      prefixKey += 'ctrl+'
+    }
+    if (event.alt) {1
+      prefixKey += 'alt+'
+    }
+    if (event.shift) {
+      prefixKey += 'shift+'
+    }
+    if (event.meta) {
+      prefixKey += 'meta+'
+    }
+    let fullKey = prefixKey + key
+    /* 对比targetKey和fullKey,要用split拆分对比 */
+    let targetKeyParts = targetKey.split('+')
+    let fullKeyParts = fullKey.split('+')
+    if (targetKeyParts.length !== fullKeyParts.length) {
+      return false
+    }
+    for (let i = 0; i < targetKeyParts.length; i++) {
+      if (targetKeyParts[i] !== fullKeyParts[i]) {
+        return false
+      }
+    }
+    return true
   }
   else if (!SYS_KEYS.includes(key)) {
     return targetKey === key
@@ -154,12 +171,11 @@ async function handleConfigChange() {
 
 async function handleModeChange(mode: "longPress" | "auto") {
   clickStatus.value.isLongPressKeyPressed = false;
-  programConfig.value.mode = mode;
+  configStore.updateConfig({ mode });
   clickStatus.value = {
     ...defClickStatus,
   };
   await saveConfig();
-  // 切换模式时停止当前操作
   restartInterval();
 }
 

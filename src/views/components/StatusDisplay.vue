@@ -45,15 +45,17 @@
 </template>
 
 <script setup lang="ts">
+import { useConfigStore } from '@/store/config';
 import { computed } from "vue";
-import { clickStatus, programConfig } from "../data";
+import { clickStatus, } from "../data";
 import StartButton from './StartButton.vue';
+const configStore = useConfigStore();
 
 const isRunning = computed(() => clickStatus.value.isRunning);
 const isTriggered = computed(() => clickStatus.value.isTriggered || clickStatus.value.isLongPressKeyPressed);
 
 const modeText = computed(() => {
-  return programConfig.value.mode === "longPress" ? "长按模式" : "自动模式";
+  return configStore.config.mode === "longPress" ? "长按模式" : "自动模式";
 });
 </script>
 

@@ -1,7 +1,7 @@
 <template>
   <HotkeyInput
     label="启停热键"
-    v-model="programConfig.startKey"
+    v-model="configStore.config.startKey"
     @change="$emit('change')"
   >
     <template #default="{ value }">
@@ -12,8 +12,8 @@
 
 <script setup lang="ts">
 import KeySvg from "@/components/KeySvg.vue";
-import { programConfig } from '@/views/data';
+import { useConfigStore } from '@/store/config';
 import HotkeyInput from "./HotkeyInput.vue";
-
+const configStore = useConfigStore();
 defineEmits(['change']);
 </script>

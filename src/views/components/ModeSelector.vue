@@ -20,13 +20,18 @@
 </template>
 
 <script setup lang="ts">
+import { useConfigStore } from '@/store/config';
 import { computed } from "vue";
-import { programConfig } from "../data";
+
 const activeMode = defineModel();
 
 defineEmits(["change"]);
+
+const configStore = useConfigStore();
+const programConfig = computed(() => configStore.config);
+
 const modes = computed(() => {
-  const {  shortcutKey } = programConfig.value;
+  const { shortcutKey } = programConfig.value;
 
   return [
     {
