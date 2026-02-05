@@ -12,7 +12,12 @@
     "tauri": "tauri",
     "tauri:dev": "tauri dev",
     "tauri:build": "tauri build",
-    "generate-icons": "powershell -ExecutionPolicy Bypass -File scripts/generate-icons.ps1"
+    "generate-icons": "powershell -ExecutionPolicy Bypass -File scripts/generate-icons.ps1",
+    "build:signed": "powershell -ExecutionPolicy Bypass -File scripts/build-signed.ps1 -CertPath ./cert.pfx -CertPassword your-cert-password",
+    "create-cert": "powershell -ExecutionPolicy Bypass -File scripts/create-self-signed-cert.ps1",
+    "install-signtool": "powershell -ExecutionPolicy Bypass -File scripts/install-signtool.ps1",
+    "setup-signing": "npm run install-signtool && npm run create-cert",
+    "build:release": "npm run build && npm run build:signed"
   },
   "dependencies": {
     "@icon-park/vue-next": "^1.4.2",
